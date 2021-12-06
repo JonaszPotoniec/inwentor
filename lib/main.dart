@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'big_button.dart';
+import 'organise/main.dart';
 
 void main() {
   runApp(const MyApp());
@@ -75,7 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             BigButton(
               title: "Organizacja",
-              onPressed: _incrementCounter,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => OrganisePage()));
+              },
               image: Icons.archive,
               description:
                   "Stwórz pudełka lub wybierz istniejące i przypisz do nich swoje przedmioty!",
