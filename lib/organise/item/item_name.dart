@@ -6,16 +6,16 @@ import 'package:flutter/src/widgets/text.dart' as Text;
 import 'package:flutter/src/material/colors.dart' as Colors;
 import './qr_result.dart';
 
-class ContainerNameState extends State<ContainerName> {
-  emojiPicker.Emoji emoji;
+class ItemNameState extends State<ItemName> {
+  String type;
 
-  ContainerNameState({required this.emoji});
+  ItemNameState({required this.type});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text.Text("Nazwanie pojemnika"),
+        title: const Text.Text("Nazwanie przedmiotu"),
         backgroundColor: Colors.Colors.grey[900],
       ),
       body: Center(
@@ -29,8 +29,7 @@ class ContainerNameState extends State<ContainerName> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            QrResult(emoji: emoji, containerName: val)));
+                        builder: (context) => QrResult(containerName: val)));
               } else {
                 var snackBar = const SnackBar(
                   content: Text.Text('Podaj nazwę!'),
@@ -40,12 +39,12 @@ class ContainerNameState extends State<ContainerName> {
               }
             },
             decoration: InputDecoration(
-                labelText: 'Nazwa pojemnika',
+                labelText: 'Nazwa przedmiotu',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 helperText:
-                    'Co planujesz trzymać w pojemniku (nazwa pojemnika)?'),
+                    'Podaj nazwę przedmiotu, który chcesz schować do pojemnika'),
           ),
         ),
       ),
@@ -53,14 +52,14 @@ class ContainerNameState extends State<ContainerName> {
   }
 }
 
-class ContainerName extends StatefulWidget {
-  final emojiPicker.Emoji emoji;
+class ItemName extends StatefulWidget {
+  final String type;
 
-  const ContainerName({Key? key, required this.emoji}) : super(key: key);
+  const ItemName({Key? key, required this.type}) : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
-  ContainerNameState createState() => ContainerNameState(
-        emoji: emoji,
+  ItemNameState createState() => ItemNameState(
+        type: type,
       );
 }

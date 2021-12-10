@@ -39,6 +39,8 @@ dependencies:
   screenshot: ^1.2.3
   pretty_qr_code: ^2.0.2
   printing: ^5.6.5
+  sqflite:
+  path:
 
 dev_dependencies:
   flutter_test:

@@ -19,12 +19,7 @@ class OrganisePage extends StatelessWidget {
           children: <Widget>[
             BigButton(
               title: "Dodaj do istniejącego",
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ChooseEmoji()));
-              },
+              onPressed: () {},
               image: Icons.file_download_outlined,
               description:
                   "Wybierz tę opcję jeśli masz już utworzone pudełka i chcesz coś do nich dodać",
@@ -33,7 +28,12 @@ class OrganisePage extends StatelessWidget {
             ),
             BigButton(
               title: "Stwórz nowe",
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChooseEmoji()));
+              },
               image: Icons.brush,
               description:
                   "Zacznij tutaj jeśli nie masz jeszcze skonfigurowanych pudełek",
