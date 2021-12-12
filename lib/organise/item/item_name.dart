@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart' as emojiPicker;
 import 'package:flutter/src/widgets/text.dart' as Text;
@@ -8,8 +6,11 @@ import './qr_result.dart';
 
 class ItemNameState extends State<ItemName> {
   String type;
+  String containerID;
+  String? itemBarcode;
 
-  ItemNameState({required this.type});
+  ItemNameState(
+      {required this.type, required this.containerID, this.itemBarcode});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,11 @@ class ItemNameState extends State<ItemName> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => QrResult(containerName: val)));
+                        builder: (context) => QrResult(
+                            containerName: val,
+                            type: type,
+                            containerID: containerID,
+                            itemBarcode: itemBarcode)));
               } else {
                 var snackBar = const SnackBar(
                   content: Text.Text('Podaj nazwę!'),
@@ -52,14 +57,21 @@ class ItemNameState extends State<ItemName> {
   }
 }
 
+// ignore: must_be_immutable
 class ItemName extends StatefulWidget {
   final String type;
+  final String containerID;
+  String? itemBarcode;
 
-  const ItemName({Key? key, required this.type}) : super(key: key);
+  ItemName(
+      {Key? key,
+      required this.type,
+      required this.containerID,
+      this.itemBarcode})
+      : super(key: key);
 
   @override
   // ignore: no_logic_in_create_state
   ItemNameState createState() => ItemNameState(
-        type: type,
-      );
+      type: type, itemBarcode: itemBarcode, containerID: containerID);
 }

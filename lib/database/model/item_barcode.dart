@@ -4,9 +4,9 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ItemBarcode {
-  final int id;
-  final int item_id;
-  final int barcode;
+  final String id;
+  final String item_id;
+  final String barcode;
 
   ItemBarcode({
     required this.id,

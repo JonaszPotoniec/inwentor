@@ -4,9 +4,9 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Item {
-  final int id;
+  final String id;
   final String name;
-  final int container_id;
+  final String container_id;
 
   Item({
     required this.id,
@@ -22,8 +22,8 @@ class Item {
     };
   }
 
- @override
- String toString() {
+  @override
+  String toString() {
     return 'Item{id: $id, name: $name, container_id: $container_id}';
   }
 }

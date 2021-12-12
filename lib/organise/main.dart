@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../big_button.dart';
 import 'choose_emoji.dart';
+import 'item/main.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class OrganisePage extends StatelessWidget {
   const OrganisePage({Key? key}) : super(key: key);
@@ -19,10 +21,21 @@ class OrganisePage extends StatelessWidget {
           children: <Widget>[
             BigButton(
               title: "Dodaj do istniejącego",
-              onPressed: () {},
+              onPressed: () async {
+                String? scannedBox = await FlutterBarcodeScanner.scanBarcode(
+                    "#000000", "Cancel", true, ScanMode.DEFAULT);
+
+                if (scannedBox != '-1') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              OrganiseItemPage(containerID: scannedBox)));
+                }
+              },
               image: Icons.file_download_outlined,
               description:
-                  "Wybierz tę opcję jeśli masz już utworzone pudełka i chcesz coś do nich dodać",
+                  "Wybierz tę opcję jeśli masz już utworzone pudełka i chcesz coś do nich dodać",
               buttonText: 'Dodaj',
               iconColor: const Color(0xffffa6a6),
             ),

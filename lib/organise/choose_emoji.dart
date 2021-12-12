@@ -14,9 +14,9 @@ class ChooseEmoji extends StatelessWidget {
         title: const Text("Wybór ikonki"),
         backgroundColor: Colors.grey[900],
       ),
-      body: Center(
-        child: Expanded(
-          child: emojiPicker.EmojiPicker(
+      body: Column(
+        children: [Expanded(child: 
+          emojiPicker.EmojiPicker(
             onEmojiSelected: (category, emoji) {
               Navigator.push(
                   context,
@@ -46,11 +46,10 @@ class ChooseEmoji extends StatelessWidget {
                 noRecentsText: "No Recents",
                 noRecentsStyle:
                     const TextStyle(fontSize: 20, color: Colors.black26),
-                tabIndicatorAnimDuration: kTabScrollDuration,
                 categoryIcons: const emojiPicker.CategoryIcons(),
                 buttonMode: emojiPicker.ButtonMode.MATERIAL),
           ),
-        ),
+        ),]
       ),
     );
   }

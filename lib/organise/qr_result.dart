@@ -8,10 +8,15 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'item/main.dart';
+import 'package:uuid/uuid.dart';
+
+import '../database/db.dart';
+import '../database/model/container.dart' as container_model;
 
 class QrResultState extends State<QrResult> {
   emojiPicker.Emoji emoji;
   String containerName;
+  var uuid = const Uuid().v4();
 
   ScreenshotController screenshotController = ScreenshotController();
 
@@ -28,6 +33,15 @@ class QrResultState extends State<QrResult> {
         pixelRatio: 10));
   }
 
+  Future<Image> onStart() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    final db = DatabaseHelper();
+    container_model.Container container = container_model.Container(
+        id: uuid, name: containerName, emoji: emoji.emoji);
+    await db.insertContainer(container);
+    return getImage();
+  }
+
   QrResultState({
     required this.emoji,
     required this.containerName,
@@ -36,7 +50,7 @@ class QrResultState extends State<QrResult> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Image>(
-        future: getImage(),
+        future: onStart(),
         builder: (context, AsyncSnapshot<Image> snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
@@ -60,7 +74,7 @@ class QrResultState extends State<QrResult> {
                     Screenshot(
                       controller: screenshotController,
                       child: PrettyQr(
-                        data: 'test',
+                        data: uuid,
                         image: snapshot.data!.image,
                         typeNumber: 3,
                         size: 320,
@@ -131,8 +145,9 @@ class QrResultState extends State<QrResult> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const OrganiseItemPage()));
+                                        builder: (context) => OrganiseItemPage(
+                                              containerID: uuid,
+                                            )));
                               },
                               //shape: RoundedRectangleBorder(
                               //    borderRadius: BorderRadius.circular(10)),
