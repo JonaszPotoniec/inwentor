@@ -145,12 +145,12 @@ class QrResultState extends State<QrResult> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
+                                        settings: const RouteSettings(
+                                            name: "ContainerQrResult"),
                                         builder: (context) => OrganiseItemPage(
                                               containerID: uuid,
                                             )));
                               },
-                              //shape: RoundedRectangleBorder(
-                              //    borderRadius: BorderRadius.circular(10)),
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all(Colors.white),

@@ -27,14 +27,15 @@ class ItemNameState extends State<ItemName> {
             textInputAction: TextInputAction.go,
             onSubmitted: (val) {
               if (val.isNotEmpty) {
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                         builder: (context) => QrResult(
                             containerName: val,
                             type: type,
                             containerID: containerID,
-                            itemBarcode: itemBarcode)));
+                            itemBarcode: itemBarcode)),
+                    ModalRoute.withName("ContainerQrResult"));
               } else {
                 var snackBar = const SnackBar(
                   content: Text.Text('Podaj nazwę!'),

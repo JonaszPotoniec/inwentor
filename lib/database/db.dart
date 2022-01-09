@@ -107,4 +107,55 @@ class DatabaseHelper {
     final db = await database;
     await db.delete("containers", where: 'id = ?', whereArgs: [id]);
   }
+
+  Future<List<Map<String, dynamic>>> findItems(String? name) async {
+    final db = await database;
+
+    String condition = "";
+
+    if (name != null) {
+      condition = " WHERE lower(i.name) LIKE '${name.toLowerCase()}%'";
+    }
+
+    String query =
+        "SELECT i.id as itemId, i.name as ItemName, i.container_id as containerId, c.name as containerName, c.emoji as containerEmoji " +
+            "FROM items as i JOIN containers as c ON i.container_id = c.id" +
+            condition +
+            ' LIMIT 100';
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery(query);
+    return maps;
+  }
+
+  Future<List<Item>> getItemsFromContainer(String containerId) async {
+    final db = await database;
+    String query =
+        "SELECT i.id as itemId, i.name as itemName, i.container_id as containerId" +
+            " FROM items as i JOIN containers as c on i.container_id = c.id WHERE i.container_id = '${containerId}'";
+    final List<Map<String, dynamic>> maps = await db.rawQuery(query);
+    return List.generate(
+        maps.length,
+        (index) => Item(
+            id: maps[index]["itemId"],
+            name: maps[index]["itemName"],
+            container_id: maps[index]["containerId"]));
+  }
+
+  Future<Map<String, dynamic>?> getContainerWithItems(
+      String containerId) async {
+    final db = await database;
+    var items = await getItemsFromContainer(containerId);
+    List<Map<String, dynamic>> maps =
+        await db.query('containers', where: 'id = ?', whereArgs: [containerId]);
+
+    if (maps.isEmpty) return null;
+
+    container_model.Container container = container_model.Container(
+        id: maps[0]["id"], name: maps[0]["name"], emoji: maps[0]["emoji"]);
+    var result = <String, dynamic>{};
+    result["container"] = container;
+    result["items"] = items;
+    print(result);
+    return result;
+  }
 }

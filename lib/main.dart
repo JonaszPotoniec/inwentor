@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'big_button.dart';
+import 'check/main.dart';
+import 'find/main.dart';
 import 'organise/main.dart';
 
 void main() {
@@ -88,7 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             BigButton(
               title: "Odnajdowanie",
-              onPressed: _incrementCounter,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FindPage()));
+              },
               image: Icons.search,
               description: "Znajdź przedmiot ukryty w pudełku!",
               buttonText: 'Tryb szukania',
@@ -96,7 +102,17 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             BigButton(
               title: "Sprawdzanie",
-              onPressed: _incrementCounter,
+              onPressed: () async {
+                String? scannedBox = await FlutterBarcodeScanner.scanBarcode(
+                    "#000000", "Cancel", true, ScanMode.DEFAULT);
+
+                if (scannedBox != '-1') {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ContentPage(id: scannedBox)));
+                }
+              },
               image: Icons.dvr,
               description:
                   "Nie chcesz otwierać pudełka a chcesz dowiedzieć się co jest w środku?",

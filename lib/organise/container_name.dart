@@ -26,11 +26,12 @@ class ContainerNameState extends State<ContainerName> {
             textInputAction: TextInputAction.go,
             onSubmitted: (val) {
               if (val.isNotEmpty) {
-                Navigator.push(
+                Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            QrResult(emoji: emoji, containerName: val)));
+                            QrResult(emoji: emoji, containerName: val)),
+                    (Route<dynamic> route) => route.isFirst);
               } else {
                 var snackBar = const SnackBar(
                   content: Text.Text('Podaj nazwę!'),
