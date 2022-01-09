@@ -28,7 +28,7 @@ class ItemInContainer extends StatelessWidget {
                 fontWeight: FontWeight.normal),
             textAlign: TextAlign.left,
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 30),
           OutlinedButton(
             child: const Text("Usuń przedmiot",
                 style: TextStyle(color: Colors.black)),
